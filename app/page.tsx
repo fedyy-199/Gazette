@@ -1,69 +1,97 @@
-import Image from "next/image";
+import React from "react";
+import { TopUtilityBar } from "@/components/home/top-utility-bar";
+import { MainNavbar } from "@/components/home/main-navbar";
+import { CategoryBar } from "@/components/home/category-bar";
+import { NewsCard } from "@/components/home/news-card";
+import { HomeFooter } from "@/components/home/footer";
+import { getHomepageArticles } from "@/lib/supabase/queries/articles";
+import type { NewsArticleItem } from "@/types/news";
+import { Newspaper } from "lucide-react";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  // Fetch real articles from Supabase database (AGENTS.md Section 5 & 7)
+  const articlesFromDb = await getHomepageArticles(24);
+
+  const displayArticles: NewsArticleItem[] = articlesFromDb.map((item) => {
+    const analysis = item.article_analyses;
+    const isPending = !analysis;
+
+    return {
+      id: item.id,
+      category: item.sources?.name || "News",
+      location: "Global",
+      title: item.title,
+      imageUrl: item.image_url,
+      sourceCount: 1,
+      framing: {
+        leftPercentage: analysis?.left_percentage ?? 33,
+        centerPercentage: analysis?.center_percentage ?? 34,
+        rightPercentage: analysis?.right_percentage ?? 33,
+        label: analysis?.bias_label ?? "unclear",
+        isPending,
+      },
+      publishedAt: item.published_at,
+    };
+  });
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <div className="min-h-screen bg-[#F8FAFC] flex flex-col font-sans">
+      
+      {/* 1. Top Utility Header Bar */}
+      <TopUtilityBar />
+
+      {/* 2. Main Navigation Header */}
+      <MainNavbar />
+
+      {/* 3. Category Horizontal Pills Bar */}
+      <CategoryBar />
+
+      {/* 4. Main Content Area */}
+      <main className="flex-1 max-w-[1280px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
+        
+        {/* Section Heading */}
+        <div className="mb-6 flex items-center justify-between">
+          <h1 className="text-[28px] sm:text-[32px] font-bold text-[#191919] tracking-tight">
+            Top News
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+          <span className="text-[13px] text-[#718096] font-medium">
+            {displayArticles.length} {displayArticles.length === 1 ? "story" : "stories"} from verified sources
+          </span>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        {/* 3-Column Responsive News Grid */}
+        {displayArticles.length > 0 ? (
+          <section
+            aria-label="Top News Articles"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+            {displayArticles.map((article, index) => (
+              <NewsCard
+                key={article.id}
+                article={article}
+                showSubtext={index >= 6}
+              />
+            ))}
+          </section>
+        ) : (
+          <div className="bg-white border border-[#E2EBF0] rounded-[16px] p-12 text-center max-w-lg mx-auto shadow-xs my-12 space-y-4">
+            <div className="w-14 h-14 rounded-full bg-[#F0F4F8] text-[#4A5566] flex items-center justify-center mx-auto">
+              <Newspaper size={28} />
+            </div>
+            <h2 className="text-[20px] font-bold text-[#191919]">No Articles in Feed Yet</h2>
+            <p className="text-[14px] text-[#718096] leading-relaxed">
+              Real articles will appear here automatically as Oxylabs scrapes active news sources and AI analysis processes them.
+            </p>
+          </div>
+        )}
+
       </main>
+
+      {/* 5. Multi-Column Footer */}
+      <HomeFooter />
+
     </div>
   );
 }

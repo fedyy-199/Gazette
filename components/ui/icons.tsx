@@ -1,0 +1,53 @@
+import React from "react";
+import {
+  Menu,
+  Search,
+  Bookmark,
+  Clock,
+  Info,
+  Share2,
+  ExternalLink,
+  Calendar,
+  BarChart2,
+  Tag,
+  User,
+  Bell,
+  SlidersHorizontal,
+  CheckCircle2,
+  MoreHorizontal,
+  XCircle,
+  Plus,
+  Maximize2,
+  Code2,
+  MoreVertical,
+  type LucideProps,
+} from "lucide-react";
+
+const defaultIconProps: LucideProps = {
+  size: 20,
+  strokeWidth: 1.8,
+  className: "stroke-[#191919] stroke-round",
+};
+
+export const Icons = {
+  menu: (props: LucideProps) => <Menu {...defaultIconProps} {...props} />,
+  search: (props: LucideProps) => <Search {...defaultIconProps} {...props} />,
+  bookmark: (props: LucideProps) => <Bookmark {...defaultIconProps} {...props} />,
+  clock: (props: LucideProps) => <Clock {...defaultIconProps} {...props} />,
+  info: (props: LucideProps) => <Info {...defaultIconProps} {...props} />,
+  share: (props: LucideProps) => <Share2 {...defaultIconProps} {...props} />,
+  externalLink: (props: LucideProps) => <ExternalLink {...defaultIconProps} {...props} />,
+  calendar: (props: LucideProps) => <Calendar {...defaultIconProps} {...props} />,
+  chart: (props: LucideProps) => <BarChart2 {...defaultIconProps} {...props} />,
+  tag: (props: LucideProps) => <Tag {...defaultIconProps} {...props} />,
+  user: (props: LucideProps) => <User {...defaultIconProps} {...props} />,
+  bell: (props: LucideProps) => <Bell {...defaultIconProps} {...props} />,
+  sliders: (props: LucideProps) => <SlidersHorizontal {...defaultIconProps} {...props} />,
+  checkCircle: (props: LucideProps) => <CheckCircle2 {...defaultIconProps} {...props} />,
+  moreHorizontal: (props: LucideProps) => <MoreHorizontal {...defaultIconProps} {...props} />,
+  xCircle: (props: LucideProps) => <XCircle {...defaultIconProps} {...props} />,
+  plus: (props: LucideProps) => <Plus {...defaultIconProps} {...props} />,
+  maximize: (props: LucideProps) => <Maximize2 {...defaultIconProps} {...props} />,
+  code: (props: LucideProps) => <Code2 {...defaultIconProps} {...props} />,
+  moreVertical: (props: LucideProps) => <MoreVertical {...defaultIconProps} {...props} />,
+};

@@ -1,26 +1,93 @@
+@import url("https://api.fontshare.com/v2/css?f[]=satoshi@900,700,600,500,400&display=swap");
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "Satoshi", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-satoshi: "Satoshi", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --color-gazette-primary: #191919;
+  --color-gazette-secondary: #4a5566;
+  --color-gazette-surface: #ffffff;
+
+  --color-gazette-green: #38a169;
+  --color-gazette-amber: #fbbf24;
+  --color-gazette-amber-dark: #f59e0b;
+  --color-gazette-amber-hover: #d97706;
+  --color-gazette-blue: #3182ce;
+  --color-gazette-teal: #2c7a7b;
+  --color-gazette-dark: #2d3748;
+
+  --color-gazette-subtle: #e2ebf0;
+  --color-gazette-border: #e2ebf0;
+  --color-gazette-divider: #e2ebf0;
+  --color-gazette-bg-secondary: #f8fafc;
+  --color-gazette-card-border: #e2ebf0;
+
+  --shadow-gazette-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-gazette-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+
+  --radius-gazette-lg: 12px;
+  --radius-gazette-full: 9999px;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #f8fafc;
+  --foreground: #191919;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-satoshi);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Specific Gazette Typography Classes */
+.text-gazette-h1 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.text-gazette-h2 {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.text-gazette-h3 {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.text-gazette-h4 {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.text-gazette-body-large {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.text-gazette-body-medium {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.text-gazette-body-small {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.text-gazette-caption {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.4;
 }
