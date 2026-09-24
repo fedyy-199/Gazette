@@ -60,11 +60,12 @@ function getOxylabsBasicAuth(): string {
 }
 
 /**
- * Create a new hourly schedule on Oxylabs for a given homepage URL.
+ * Create a new daily schedule on Oxylabs for a given homepage URL.
+ * Defaults to 00:00 UTC daily ("0 0 * * *").
  */
 export async function createOxylabsSchedule(
   url: string,
-  cron = "0 * * * *",
+  cron = "0 0 * * *",
   endTime = "2035-01-01 00:00:00"
 ): Promise<OxylabsCreateScheduleResponse> {
   const basicAuth = getOxylabsBasicAuth();

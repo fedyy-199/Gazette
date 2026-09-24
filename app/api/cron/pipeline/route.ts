@@ -4,7 +4,7 @@ import { runAnalysisPipeline } from "@/lib/ai/pipeline";
 
 /**
  * GET /api/cron/pipeline
- * Automatic hourly pipeline route chaining Oxylabs scheduled results processing
+ * Automatic daily pipeline route chaining Oxylabs scheduled results processing
  * and AI analysis.
  * Adheres strictly to AGENTS.md Section 14 & 18.
  * 
@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
   }
 
   console.log("=================================================");
-  console.log(`[Cron Pipeline] Starting automatic hourly pipeline at ${new Date().toISOString()}`);
+  console.log(`[Cron Pipeline] Starting automatic daily pipeline at ${new Date().toISOString()}`);
   console.log("=================================================");
 
   // Step 1: Process completed Oxylabs scheduled results (Section 18 rule 4)

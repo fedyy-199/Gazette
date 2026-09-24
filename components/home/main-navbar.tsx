@@ -15,8 +15,7 @@ export function MainNavbar() {
   const navItems = [
     { name: "Home", href: "/" },
     { name: "For You", href: "/for-you" },
-    { name: "Local", href: "#local" },
-    { name: "Blindspot", href: "#blindspot" },
+
   ];
 
   const isNavActive = (item: (typeof navItems)[0]) => {
@@ -43,11 +42,10 @@ export function MainNavbar() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`text-[15px] transition-colors relative py-1 cursor-pointer ${
-                    active
+                  className={`text-[15px] transition-colors relative py-1 cursor-pointer ${active
                       ? "font-bold text-[#191919]"
                       : "font-medium text-[#4A5566] hover:text-[#191919]"
-                  }`}
+                    }`}
                 >
                   {item.name}
                   {active && (
@@ -115,11 +113,10 @@ export function MainNavbar() {
                 key={item.name}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`block px-3 py-2 rounded-md text-[14px] ${
-                  active
+                className={`block px-3 py-2 rounded-md text-[14px] ${active
                     ? "font-bold bg-[#F8FAFC] text-[#191919]"
                     : "text-[#4A5566]"
-                }`}
+                  }`}
               >
                 {item.name}
               </Link>

@@ -37,7 +37,7 @@ export async function GET() {
 
 /**
  * POST /api/oxylabs/schedules
- * Syncs active sources to Oxylabs hourly schedules and cleans up orphan schedules.
+ * Syncs active sources to Oxylabs daily schedules and cleans up orphan schedules.
  * Adheres to AGENTS.md Section 14, 15, 18.
  * Requires x-gazette-admin-secret header.
  */
@@ -54,6 +54,8 @@ export async function POST(request: NextRequest) {
 
   console.log("=================================================");
   console.log(`[API:POST /api/oxylabs/schedules] Syncing schedules at ${new Date().toISOString()}`);
+
+  const DAILY_CRON = "0 0 * * *";
 
   try {
     // 1. Fetch active sources from Supabase
@@ -77,10 +79,10 @@ export async function POST(request: NextRequest) {
       oxylabsScheduleId: string;
     }> = [];
 
-    // 2. Create hourly schedule for active sources missing one
+    // 2. Create or update daily schedule for active sources
     for (const source of activeSources) {
       const existing = activeSchedulesBySourceId.get(source.id);
-      if (existing) {
+      if (existing && existing.cron === DAILY_CRON) {
         existingValid.push({
           sourceName: source.name,
           sourceId: source.id,
@@ -89,13 +91,29 @@ export async function POST(request: NextRequest) {
         continue;
       }
 
-      console.log(`[API:Sync Schedules] Creating schedule for ${source.name} (${source.listing_url})...`);
+      // If existing schedule has an outdated cron (e.g. legacy hourly), deactivate it on Oxylabs
+      if (existing && existing.cron !== DAILY_CRON) {
+        console.log(
+          `[API:Sync Schedules] Updating schedule for ${source.name} from "${existing.cron}" to "${DAILY_CRON}"...`
+        );
+        try {
+          await setOxylabsScheduleState(existing.oxylabs_schedule_id, false);
+        } catch (deactivateErr) {
+          console.warn(
+            `[API:Sync Schedules] Could not deactivate outdated schedule ${existing.oxylabs_schedule_id}:`,
+            deactivateErr
+          );
+        }
+      } else {
+        console.log(`[API:Sync Schedules] Creating daily schedule for ${source.name} (${source.listing_url})...`);
+      }
+
       try {
-        const created = await createOxylabsSchedule(source.listing_url, "0 * * * *");
+        const created = await createOxylabsSchedule(source.listing_url, DAILY_CRON);
         await upsertSchedule({
           source_id: source.id,
           oxylabs_schedule_id: created.schedule_id,
-          cron: "0 * * * *",
+          cron: DAILY_CRON,
           status: "active",
         });
 
@@ -104,7 +122,7 @@ export async function POST(request: NextRequest) {
           sourceId: source.id,
           oxylabsScheduleId: created.schedule_id,
         });
-        console.log(`[API:Sync Schedules] Created schedule ID ${created.schedule_id} for ${source.name}`);
+        console.log(`[API:Sync Schedules] Registered daily schedule ID ${created.schedule_id} for ${source.name}`);
       } catch (err: unknown) {
         const msg = err instanceof Error ? err.message : String(err);
         console.error(`[API:Sync Schedules] Failed to create schedule for ${source.name}: ${msg}`);
