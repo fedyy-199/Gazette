@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { auth } from "@clerk/nextjs/server";
 import { TopUtilityBar } from "@/components/home/top-utility-bar";
 import { MainNavbar } from "@/components/home/main-navbar";
 import { HomeFooter } from "@/components/home/footer";
@@ -10,6 +11,8 @@ import { Sparkles, ArrowRight, Layers, Newspaper } from "lucide-react";
 export const dynamic = "force-dynamic";
 
 export default async function ForYouPage() {
+  await auth.protect();
+
   const clusters = await getArticlesWithRelatedClusters(12);
 
   // Clusters with at least 1 related story (semantic multi-perspective cluster)
