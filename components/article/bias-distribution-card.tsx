@@ -20,7 +20,7 @@ export function BiasDistributionCard({
 
   return (
     <div className="bg-[#FFFFFF] border border-[#E2EBF0] rounded-[12px] p-5 shadow-[0_2px_4px_rgba(0,0,0,0.04)] space-y-3.5 select-none my-6">
-      
+
       {/* Title & Info Icon */}
       <div className="flex items-center gap-1.5 relative">
         <span className="text-[14px] font-bold text-[#191919]">
@@ -72,14 +72,10 @@ export function BiasDistributionCard({
       </div>
 
       {/* Source Count */}
-      <div className="text-[13px] font-semibold text-[#191919]">
-        {sourceCount} sources
-      </div>
+
 
       {/* Footnote description matching mockup */}
-      <p className="text-[11.5px] text-[#718096] leading-relaxed pt-1 border-t border-[#E2EBF0]/70">
-        Sources: Body Medium <span className="font-semibold text-[#4A5566]">bold</span>, Fox News, Fox Host, Daily Sources, Reuters, Stabilizing state, Semi-Active state, Description from active and non-active description.
-      </p>
+
 
     </div>
   );

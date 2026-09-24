@@ -22,14 +22,9 @@ export function RelatedStories({ articles }: RelatedStoriesProps) {
             <h2 className="text-[22px] font-bold text-[#191919] tracking-tight">
               Related Stories & Coverage
             </h2>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#EBF8FF] text-[#2B6CB0] border border-[#BEE3F8]">
-              <Sparkles size={11} className="text-[#3182CE]" />
-              AI Vector Match
-            </span>
+
           </div>
-          <p className="text-[13px] text-[#718096]">
-            Articles sharing high semantic similarity and topic overlap via pgvector cosine distance.
-          </p>
+
         </div>
 
         <span className="text-[12px] font-semibold text-[#718096]">

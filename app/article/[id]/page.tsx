@@ -57,8 +57,7 @@ export default async function ArticleDetailsPage({
   return (
     <div className="min-h-screen bg-[#F8FAFC] flex flex-col font-sans">
 
-      {/* 1. Top Utility Bar */}
-      <TopUtilityBar />
+
 
       {/* 2. Main Navigation */}
       <MainNavbar />
