@@ -38,9 +38,10 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] flex flex-col font-sans">
-      
-      {/* 1. Top Utility Header Bar */}
+
+      {/* 1. Top Utility Header Bar
       <TopUtilityBar />
+       */}
 
       {/* 2. Main Navigation Header */}
       <MainNavbar />
@@ -50,7 +51,7 @@ export default async function HomePage() {
 
       {/* 4. Main Content Area */}
       <main className="flex-1 max-w-[1280px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
-        
+
         {/* Section Heading */}
         <div className="mb-6 flex items-center justify-between">
           <h1 className="text-[28px] sm:text-[32px] font-bold text-[#191919] tracking-tight">
